@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="icon" type="image/jpeg" href="icon.jpeg">   
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="search">
+        <input type="text" placeholder="Enter city name" spellcheck="false" />
+        <button>
+          <img src="search.png" alt="Search" />
+        </button>
+      </div>
+      <div class="error">
+        <p>Invalid city name</p>
+      </div>
+      <div>
+        <div class="weather">
+          <img src="rain.png" class="weather-icon" alt="Weather Icon" />
+          <h1 class="temp">22°C</h1>
+          <h2 class="city">New Delhi</h2>
+          <div class="recommendation"></div>
+          <div class="details">
+            <div class="col">
+              <img src="humidity.png" alt="Humidity Icon" />
+              <div>
+                <p class="humidity">50%</p>
+                <p>Humidity</p>
+              </div>
+            </div>
+            <div class="col">
+              <img src="wind.png" alt="Wind Icon" />
+              <div>
+                <p class="wind">15 km/h</p>
+                <p>Wind Speed</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="forecast">
+          <h2>Next 6 Hours</h2>
+          <div class="forecast-details">
+          </div>
+        </div>
+      </div>
+      <div class="recommendation"></div>
+    </div>
+    <script>
+      const apiKey = "e7db94a40079364ffef0a418c908e30a";
+      const apiUrl = "https://api.openweathermap.org/data/2.5/";
+      const searchBox = document.querySelector(".search input");
+      const searchBtn = document.querySelector(".search button");
+      const weatherIcon = document.querySelector(".weather-icon");
+      const forecastDetails = document.querySelector(".forecast-details");
+
+      async function checkWeather(city) {
+        const response = await fetch(
+          `${apiUrl}weather?units=metric&q=${city}&appid=${apiKey}`
+        );
+        if (response.status === 404) {
+          document.querySelector(".error").style.display = "block";
+          document.querySelector(".weather").style.display = "none";
+          document.querySelector(".forecast").style.display = "none";
+        } else {
+          const data = await response.json();
+          const temperature = Math.round(data.main.temp);
+          const weatherCondition = data.weather[0].main;
+          weatherIcon.src = getWeatherIcon(weatherCondition);
+          document.querySelector(".weather").style.display = "block";
+          document.querySelector(".error").style.display = "none";
+          document.querySelector(".city").innerHTML = data.name;
+          document.querySelector(".temp").innerHTML = temperature + "°C";
+          document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+          document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+
+          displayRecommendations(temperature, weatherCondition);
+
+          const forecastResponse = await fetch(
+            `${apiUrl}forecast?units=metric&q=${city}&appid=${apiKey}`
+          );
+          const forecastData = await forecastResponse.json();
+          displayForecast(forecastData);
+        }
+      }
+
+      function displayRecommendations(temperature, weatherCondition) {
+        let recommendation = "";
+        if (weatherCondition === "Rain") {
+          recommendation = "Carry an umbrella or raincoat and avoid going out unnecessarily.";
+        } else {
+          if (temperature > 30) {
+            recommendation = "Beware of heatstrokes and stay hydrated. Consider staying indoors or in shaded areas.";
+          } else if (temperature > 20) {
+            recommendation = "Enjoy the pleasant weather, but don't forget to stay hydrated.";
+          } else {
+            recommendation = "It's quite cold. Bundle up and stay warm.";
+          }
+        }
+        document.querySelector(".recommendation").innerHTML = recommendation;
+      }
+
+      function displayForecast(data) {
+        forecastDetails.innerHTML = "";
+        const forecastList = data.list.slice(0, 6); 
+        forecastList.forEach((item) => {
+          const forecastTime = new Date(item.dt * 1000).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+          const forecastTemp = Math.round(item.main.temp) + "°C";
+          const weatherCondition = item.weather[0].main;
+          const weatherIconSrc = getWeatherIcon(weatherCondition);
+          const forecastItem = `
+            <div class="forecast-card">
+              <img src="${weatherIconSrc}" alt="${weatherCondition}" class="forecast-icon" />
+              <p>${forecastTime}: ${forecastTemp}</p>
+            </div>`;
+          forecastDetails.insertAdjacentHTML("beforeend", forecastItem);
+        });
+        document.querySelector(".forecast").style.display = "block";
+      }
+
+      function getWeatherIcon(weatherCondition) {
+        switch (weatherCondition) {
+          case "Clear":
+            return "clear.png";
+          case "Clouds":
+            return "clouds.png";
+          case "Rain":
+            return "rain.png";
+          case "Drizzle":
+            return "drizzle.png";
+          case "Mist":
+            return "mist.png";
+          default:
+            return "clear.png"; 
+        }
+      }
+
+      searchBtn.addEventListener("click", () => {
+        checkWeather(searchBox.value);
+      });
+    </script>
+  </body>
+</html>

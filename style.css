@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #222;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh;
+}
+
+.card {
+  width: 90%; 
+  max-width: 400px; /* Restrict max width for better display on mobile */
+  background: linear-gradient(135deg, #00feba, #5b548a);
+  color: #fff;
+  margin: 0; 
+  border-radius: 10px;
+  padding: 40px 35px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search input {
+  border: 0;
+  outline: 0;
+  background: #ebfffc;
+  color: #555;
+  padding: 10px 25px;
+  height: 50px; /* Adjust height */
+  border-radius: 30px;
+  flex: 1;
+  margin-right: 16px;
+  font-size: 16px; /* Adjust font size */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search button {
+  border: 0;
+  outline: 0;
+  background-color: #ebfffc;
+  border-radius: 50%;
+  width: 50px; /* Adjust width */
+  height: 50px; /* Adjust height */
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search button img {
+  width: 20px; /* Adjust width */
+}
+
+.weather-icon {
+  width: 100px; /* Adjust width */
+  margin-top: 20px; /* Adjust margin */
+}
+
+.weather h1 {
+  font-size: 40px; /* Adjust font size */
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.weather h2 {
+  font-size: 30px; /* Adjust font size */
+  font-weight: 400;
+}
+
+.suggestions {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0% 20px;
+  font-size: 16px; /* Adjust font size */
+  margin-top: 20px; 
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 10px; /* Add margin for spacing */
+}
+
+.col img {
+  width: 30px; /* Adjust width */
+  margin-right: 10px;
+}
+
+.humidity,
+.wind {
+  font-size: 20px; /* Adjust font size */
+}
+
+.error {
+  text-align: center;
+  font-size: 14px;
+  display: none;
+  color: #ff5733;
+  margin-top: 20px;
+}
+
+.forecast-details {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.forecast-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px; /* Adjust margin */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  flex-direction: column; /* Stack items vertically */
+  text-align: center; /* Center align text */
+}
+
+.forecast-card:hover {
+  transform: translateY(-3px);
+}
+
+.forecast-card p {
+  margin: 0;
+  font-size: 16px; /* Adjust font size */
+}
+
+.forecast-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px; /* Add margin */
+}
+
+.recommendation {
+  font-size: 18px; /* Adjust font size */
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: none; /* Remove max-width for mobile devices */
+    padding: 30px 25px;
+  }
+
+  .weather h1 {
+    font-size: 35px; /* Adjust font size */
+  }
+
+  .weather h2 {
+    font-size: 25px; /* Adjust font size */
+  }
+
+  .details {
+    flex-direction: column; /* Stack details vertically */
+  }
+
+  .col {
+    margin-bottom: 20px;
+  }
+
+  .search input {
+    height: 40px; /* Adjust height */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .search button {
+    width: 40px; /* Adjust width */
+    height: 40px; /* Adjust height */
+  }
+
+  .weather-icon {
+    width: 80px; /* Adjust width */
+  }
+
+  .forecast-card {
+    padding: 8px; /* Adjust padding */
+    margin: 5px 0; /* Adjust margin */
+  }
+
+  .forecast-card p {
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .forecast-icon {
+    width: 25px; /* Adjust width */
+    height: 25px; /* Adjust height */
+  }
+
+  .recommendation {
+    font-size: 16px; /* Adjust font size */
+  }
+}
